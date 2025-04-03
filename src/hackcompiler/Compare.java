@@ -27,6 +27,11 @@ public class Compare {
     // Remember to RESET the color/background after you're done!
     public static final String ANSI_RESET = "\u001B[0m";
 
+    /**
+     * 
+     * @param fileName the base stem of the file name/path, without the extension.
+     * @throws IOException errors may occur while dealing with file system.
+     */
     public static void compareFile(String fileName) throws IOException {
         File translatedFile = new File(fileName+".hack");
         File compareFile = new File(fileName+"Compare.hack");

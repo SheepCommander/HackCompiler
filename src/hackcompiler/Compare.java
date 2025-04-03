@@ -62,6 +62,9 @@ public class Compare {
         while (translation.hasNext() || compare.hasNext()) {
             String yourTL = (translation.hasNext()) ? translation.nextLine() : "empty";
             String compareTL = (compare.hasNext()) ? compare.nextLine() : "empty";
+            
+            while (original.instructionType()==Parser.Instruction.L_INSTRUCTION || original.instructionType()==Parser.Instruction.INVALID_INSTRUCTION)
+                original.advance();
 
             System.out.printf("| %4s | %s%16s%s | %10s |\n", lineN, ANSI_GREEN, compareTL, ANSI_RESET, original.getCurrentInstruction());
             if ( !yourTL.equals(compareTL) ) {

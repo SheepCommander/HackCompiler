@@ -1,4 +1,6 @@
-import java.io.*;
+package hackcompiler;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class Parser {
     private String currentInstruction;
     private String[] instructions;
-    private int nextInstrIndex = 0;
+    private int instrIndex = -1;
 
     /**
      * This enum will be used to identify that type of the current instruction.
@@ -27,7 +29,6 @@ public class Parser {
      *                     working.
      */
     public Parser(String fileName) throws IOException {
-        // Parser will be an object whose behavior is used by the Compiler
         File file = new File(fileName);
         Scanner input = new Scanner(file);
 
@@ -44,11 +45,7 @@ public class Parser {
         } while (input.hasNextLine());
         instructions = lines.toArray(new String[lines.size()]);
         advance(); // set the currentInstruction
-
-        // TODO: Remove debug
-        System.out.println();
-        for (String s : instructions)
-            System.out.println(s);
+        input.close(); // close the input stream.
     }
 
     /**
@@ -57,7 +54,7 @@ public class Parser {
      * @return true if there is.
      */
     public boolean hasMoreLines() {
-        return nextInstrIndex < instructions.length - 1;
+        return instrIndex < instructions.length;
     }
 
     /**
@@ -66,8 +63,8 @@ public class Parser {
      * current command.
      */
     public void advance() {
-        currentInstruction = instructions[nextInstrIndex];
-        nextInstrIndex++;
+        instrIndex++; //-1 before advance() is called
+        currentInstruction = (instrIndex < instructions.length) ? instructions[instrIndex] : null;
     }
 
     /**
@@ -100,7 +97,9 @@ public class Parser {
      *         implemented.
      */
     public String symbol() {
-        String symbol = currentInstruction.substring(1); //TODO: Expand this with symbolic
+        String symbol = currentInstruction.substring(1);
+        if (symbol.contains(")"))
+            symbol = symbol.substring(0, symbol.indexOf(")"));
         return symbol;
     }
 
@@ -122,7 +121,7 @@ public class Parser {
     public String comp() {
         int indexD = currentInstruction.indexOf("=");
         int indexJ = currentInstruction.indexOf(";");
-        if (indexD < 0) indexD = 0;
+        if (indexD < 0) indexD = -1; // Should be -1 since we add +1 in the substring call.
         if (indexJ < 0) indexJ = currentInstruction.length();
 
         return currentInstruction.substring(indexD+1, indexJ);
@@ -136,6 +135,6 @@ public class Parser {
 		int indexJ = currentInstruction.indexOf(";");
         if (indexJ < 0) return null;
 
-        return currentInstruction.substring(indexJ);
+        return currentInstruction.substring(indexJ+1);
 	}
 }

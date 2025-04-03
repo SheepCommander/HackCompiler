@@ -1,3 +1,4 @@
+package hackcompiler;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -6,16 +7,20 @@ import java.util.Set;
  */
 public class Code {
     /*
-     * TODO: Declare static data structures that contain lookups for the
+     * TODO: Declare static data structures that will contain lookups for the
      * destinations, computations, and jumps. This can be done many ways.
-     * The Java HashTable structure is a common choice. By creating 3 hashtables
+     * The Java HashMap structure is a common choice. By creating 3 hashmaps
      * (one for dest, one for comp, and one for jump) you can provide an input
      * value to get the binary equivalent.
      */
-    private HashMap<String, String> destMap = new HashMap<String, String>();
     private HashMap<String, String> compMap = new HashMap<String, String>();
+    private HashMap<String, String> destMap = new HashMap<String, String>();
     private HashMap<String, String> jumpMap = new HashMap<String, String>();
-
+    
+    /**
+     * I used this in {@link com.hackcompiler.Parser.#instructionType()}
+     * @return the valid mnemonics for comp. 
+     */
     public Set<String> getCompKeys() {
         return compMap.keySet();
     }
@@ -23,15 +28,6 @@ public class Code {
      * Initialize {@link #Code} and populate the data structures.
      */
     public Code() {
-        destMap.put(null,"000");
-        destMap.put("M","001");
-        destMap.put("D","010");
-        destMap.put("MD","011");
-        destMap.put("A","100");
-        destMap.put("AM","101");
-        destMap.put("AD","110");
-        destMap.put("AMD","111");
-        
         compMap.put("0", "0101010");
         compMap.put("1", "0111111");
         compMap.put("-1", "0111010");
@@ -61,6 +57,17 @@ public class Code {
         compMap.put("D&M", "1000000");
         compMap.put("D|M", "1010101");
 
+        destMap.put(null,"000");
+        destMap.put("","000");
+        destMap.put("M","001");
+        destMap.put("D","010");
+        destMap.put("MD","011");
+        destMap.put("A","100");
+        destMap.put("AM","101");
+        destMap.put("AD","110");
+        destMap.put("AMD","111");
+        
+        jumpMap.put("","000");
         jumpMap.put(null,"000");
         jumpMap.put("JGT","001");
         jumpMap.put("JEQ","010");
@@ -72,17 +79,6 @@ public class Code {
     }
 
     /**
-     * Returns the binary code of the destination
-     * or "000" if there is none (null/empty string passed in)
-     * 
-     * @param inStr The Hack mnemonic to be translated.
-     * @return the 3 destination bits as a String.
-     */
-    public String dest(String inStr) {
-        return destMap.get(inStr);
-    }
-
-    /**
      * Returns the binary code of the comp nmenonic.
      * Should not be null as that goes against the computer's specification.
      * 
@@ -91,6 +87,17 @@ public class Code {
      */
     public String comp(String inStr) {
         return compMap.get(inStr);
+    }
+
+    /**
+     * Returns the binary code of the destination
+     * or "000" if there is none (null/empty string passed in)
+     * 
+     * @param inStr The Hack mnemonic to be translated.
+     * @return the 3 destination bits as a String.
+     */
+    public String dest(String inStr) {
+        return destMap.get(inStr);
     }
 
     /**

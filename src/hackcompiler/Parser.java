@@ -46,7 +46,6 @@ public class Parser {
         instructions = lines.toArray(new String[lines.size()]);
         advance(); // set the currentInstruction
         input.close(); // close the input stream.
-        for (String s : instructions) System.out.println(s);
     }
 
     /**

@@ -4,10 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * A class containing helpful constants and one method in order to check yourFile.hack
+ * against yourFileCompare.hack and print out a pretty table.
+ */
 public class Compare {
     // These are cool ANSI color codes that work in Unix-based terminals.
     // Using these make all following text in the terminal use that color/background.
-    // See: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+    // Using these constants, only one modifier can be applied at once. But, it is possible
+    // to multiple. See: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -28,40 +33,48 @@ public class Compare {
     public static final String ANSI_RESET = "\u001B[0m";
 
     /**
-     * 
+     * Given a fileName, searches for a `fileName`Compare file, and if it exists
+     * prints a comparison table to the console.
      * @param fileName the base stem of the file name/path, without the extension.
      * @throws IOException errors may occur while dealing with file system.
      */
     public static void compareFile(String fileName) throws IOException {
         File translatedFile = new File(fileName+".hack");
         File compareFile = new File(fileName+"Compare.hack");
-        Scanner myTranslation = new Scanner(translatedFile);
+        Scanner translation = new Scanner(translatedFile);
         Scanner compare = new Scanner(compareFile);
 
         if (!compareFile.exists() || !compareFile.canRead() || !compare.hasNext()) {
-            myTranslation.close();
+            translation.close();
             compare.close();
             return; // The compare file does not exist or is empty, meaning there is nothing to check.
         }
         System.out.printf("%s%sCompare.hack compare file exists! Comparing...%s\n", ANSI_YELLOW, fileName, ANSI_RESET);
         
+        // Iterate over the compare stuff
+        Parser original = new Parser(fileName+".asm");
+
         boolean passed = true;
         int lineN = 1;
-        while (myTranslation.hasNext() || compare.hasNext()) {
-            String lineTL = (myTranslation.hasNext()) ? myTranslation.nextLine() : "empty";
+        System.out.printf("| %4s | %16s | %10s |\n","Line","Binary check","Symbolic");
+        System.out.printf("| ---- | ---------------- | ---------- |\n");
+        
+        while (translation.hasNext() || compare.hasNext()) {
+            String yourTL = (translation.hasNext()) ? translation.nextLine() : "empty";
             String compareTL = (compare.hasNext()) ? compare.nextLine() : "empty";
 
-            if ( !lineTL.equals(compareTL) ) {
-                System.out.printf("Line %s- Wrong:  \t%s%s%s\n", lineN, ANSI_RED, lineTL, ANSI_RESET);
-                passed = false;
+            System.out.printf("| %4s | %s%16s%s | %10s |\n", lineN, ANSI_GREEN, compareTL, ANSI_RESET, original.getCurrentInstruction());
+            if ( !yourTL.equals(compareTL) ) {
+                System.out.printf("%s| %4s | %s%16s%s | %10s |%s\n", "\033[41m", "", "\033[33;41m", yourTL, "\033[31m", "", ANSI_RESET);
+                passed = false;//\u001b[31;31m
             }
-                System.out.printf("Line %s- Correct:\t%s%s%s\n", lineN, ANSI_GREEN, compareTL, ANSI_RESET);
             lineN++;
+            original.advance();
         }
-        String conclusion = (passed) ? "Output and Compare files are identical!" : "Output and Compare files differ.";
-        System.out.println(conclusion+"\n");
+        String conclusion = (passed) ? "Output and Compare files are identical!" : ANSI_RED_BACKGROUND+"Output and Compare files differ.";
+        System.out.println(conclusion+ANSI_RESET);
         
-        myTranslation.close();
+        translation.close();
         compare.close();
     }
 }

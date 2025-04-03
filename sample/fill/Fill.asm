@@ -16,7 +16,7 @@
 	M=D
 
 (LOOP)	           //progresses the index backwards. 
-	@16//@i
+	@15//@i
 	M=M-1
 	D=M
 	@0//@INIT

@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 /**
  * {@link Parser}: The main function of the parser is to break each assembly
- * command into its
- * underlying components (fields and symbols).
+ * command into its underlying components (fields and symbols).
  */
 public class Parser {
     private String currentInstruction;
@@ -15,7 +14,7 @@ public class Parser {
     private int instrIndex = -1;
 
     /**
-     * This enum will be used to identify that type of the current instruction.
+     * This enum will be used to identify the type of the current instruction.
      */
     public enum Instruction {
         L_INSTRUCTION, A_INSTRUCTION, C_INSTRUCTION, INVALID_INSTRUCTION
@@ -43,9 +42,11 @@ public class Parser {
                 lines.add(line);
             
         } while (input.hasNextLine());
+
         instructions = lines.toArray(new String[lines.size()]);
         advance(); // set the currentInstruction
         input.close(); // close the input stream.
+        for (String s : instructions) System.out.println(s);
     }
 
     /**
@@ -63,7 +64,7 @@ public class Parser {
      * current command.
      */
     public void advance() {
-        instrIndex++; //-1 before advance() is called
+        instrIndex++; // Initially -1 before advance() is called
         currentInstruction = (instrIndex < instructions.length) ? instructions[instrIndex] : null;
     }
 
@@ -137,4 +138,10 @@ public class Parser {
 
         return currentInstruction.substring(indexJ+1);
 	}
+
+    /**
+     * ONLY USED FOR THE {@link Compare} CLASS.
+     * @return currentInstruction
+     */
+    public String getCurrentInstruction() { return currentInstruction; }
 }

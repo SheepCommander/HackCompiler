@@ -11,7 +11,7 @@ and hopefully with additional opinionated syntactical sugar.
 
 ---
 
-# VSCode Getting Started guided
+# VSCode Getting Started guide
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 

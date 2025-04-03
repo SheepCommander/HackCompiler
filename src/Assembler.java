@@ -42,6 +42,7 @@ public class Assembler {
                 if (parser.instructionType() == Parser.Instruction.C_INSTRUCTION) {
                     // Process the C_Command by using a Coder object to translate into binary
                     // and write to the output file
+                    translation += "111";
                     translation += code.dest(parser.dest());
                     translation += code.comp(parser.comp());
                     translation += code.jump(parser.jump());

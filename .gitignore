@@ -1,0 +1,4 @@
+# Ignore .hack files
+**.hack
+# Include Compare.hack files
+!**Compare.hack

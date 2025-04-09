@@ -7,7 +7,6 @@ import java.util.HashMap;
  */
 public class SymbolTable {
     private HashMap<String, Integer> symbols = new HashMap<String, Integer>();
-    private int varAddress = 16;
 
     // Creates a new empty symbol table.
     public SymbolTable() {

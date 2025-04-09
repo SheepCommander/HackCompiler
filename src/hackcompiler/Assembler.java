@@ -27,12 +27,22 @@ public class Assembler {
         String fileName = args[0].substring(0,args[0].lastIndexOf("."));
 
         try {
+            Parser parser = new Parser(fileName+".asm");
+            while (parser.hasMoreLines()) {
+                if (parser.instructionType() == Parser.Instruction.L_INSTRUCTION) {
+                    String symbol = 
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+        }        
+        try {
             // Create a new Parser object sending in the input filename. This must be
             // in a try block as there is the potential for a IOException when dealing
             // with the file system.
             Parser parser = new Parser(fileName+".asm");
 
-            // TODO: Create a new file for output.
+            // Create a new file for output.
             PrintStream fileOut = new PrintStream(new File(fileName+".hack"));
 
             // Iterate over every line in the parser.
@@ -40,9 +50,7 @@ public class Assembler {
                 String translation = "";
                 if (parser.instructionType() == Parser.Instruction.A_INSTRUCTION) {
                     // Process an A_Command and write to output file
-                    // TODO: Expand this section to work with symbols. Currently throws an error if any symbols are entered.
-                    // Reminder: SP=0, LCL=1, ARG=2, THIS=3, THAT=4, R0-R15=0-15, SCREEN=16384, KBD=24576
-                    // Reminder: User-defined variables (@my_var) start from 16 as they're encountered and count up.
+                    // Expand this section to work with symbols. Currently throws an error if any symbols are entered.
                     String symbol = parser.symbol();
                     int num = Integer.parseInt(symbol);
                     translation = String.format("%16s", Integer.toBinaryString(num)).replace(' ','0');

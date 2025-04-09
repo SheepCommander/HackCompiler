@@ -11,6 +11,8 @@ public class SymbolTable {
 
     // Creates a new empty symbol table.
     public SymbolTable() {
+        // Reminder: SP=0, LCL=1, ARG=2, THIS=3, THAT=4, R0-R15=0-15, SCREEN=16384, KBD=24576
+        // Reminder: User-defined variables (@my_var) start from 16 as they're encountered and count up.
         symbols.put("R0",0);
         symbols.put("R1",1);
         symbols.put("R2",2);
@@ -27,7 +29,13 @@ public class SymbolTable {
         symbols.put("R13",13);
         symbols.put("R14",14);
         symbols.put("R15",15);
-        
+        symbols.put("SP",0);
+        symbols.put("LCL",1);
+        symbols.put("ARG",2);
+        symbols.put("THIS",3);
+        symbols.put("THAT",4);
+        symbols.put("SCREEN",16384);
+        symbols.put("KBD",24576);
     }
 
     // Adds the pair (symbol,address) to the table.

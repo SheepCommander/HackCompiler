@@ -1,25 +1,22 @@
 package hackcompiler;
+
 import java.util.HashMap;
 import java.util.Set;
 
-/**
- * {@link Code}: Translates Hack assembly language mnemonics into binary code.
- */
+/** Translates Hack assembly language mnemonics into binary code. */
 public class Code {
-    /*
-     * TODO: Declare static data structures that will contain lookups for the
-     * destinations, computations, and jumps. This can be done many ways.
-     * The Java HashMap structure is a common choice. By creating 3 hashmaps
-     * (one for dest, one for comp, and one for jump) you can provide an input
-     * value to get the binary equivalent.
-     */
+    // Declare static data structures that will contain lookups for the
+    // destinations, computations, and jumps. This can be done many ways.
+    // The Java HashMap structure is a common choice. By creating 3 hashmaps
+    // (one for dest, one for comp, and one for jump) you can provide an input
+    // value to get the binary equivalent.
     private HashMap<String, String> compMap = new HashMap<String, String>();
     private HashMap<String, String> destMap = new HashMap<String, String>();
     private HashMap<String, String> jumpMap = new HashMap<String, String>();
     
     /**
-     * I used this in {@link com.hackcompiler.Parser.#instructionType()}
-     * @return the valid mnemonics for comp. 
+     * I used this in {@link hackcompiler.Parser#instructionType()}
+     * @return all the valid mnemonics for comp.
      */
     public Set<String> getCompKeys() {
         return compMap.keySet();
@@ -78,12 +75,9 @@ public class Code {
         jumpMap.put("JMP","111");
     }
 
-    /**
-     * Returns the binary code of the comp nmenonic.
-     * Should not be null as that goes against the computer's specification.
-     * 
-     * @param inStr The Hack mnemonic to be translated.
-     * @return the 7 computation bits
+    /** 
+     * @param inStr Should not be null as that goes against the computer's specification.
+     * @return Returns the binary code of the comp nmenonic.
      */
     public String comp(String inStr) {
         return compMap.get(inStr);
@@ -91,21 +85,15 @@ public class Code {
 
     /**
      * Returns the binary code of the destination
-     * or "000" if there is none (null/empty string passed in)
-     * 
-     * @param inStr The Hack mnemonic to be translated.
-     * @return the 3 destination bits as a String.
+     * or {@code 000} if there is none (null/empty string passed in)
      */
     public String dest(String inStr) {
         return destMap.get(inStr);
     }
 
     /**
-     * Returns the binary code of the jump
-     * or "000" if there is none (null/empty string passed in)
-     * 
-     * @param inStr The Hack mnemonic to be translated.
-     * @return the 3 jump bits as a String
+     * Returns the binary code of the jump,
+     * or {@code 000} if there is none (null/empty string passed in)
      */
     public String jump(String inStr) {
         return jumpMap.get(inStr);

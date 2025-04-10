@@ -2,16 +2,12 @@ package hackcompiler;
 
 import java.util.HashMap;
 
-/**
- * SymbolTable: Keeps a correspondence between symbolic labels and numeric addresses.
- */
+/** SymbolTable: Keeps a correspondence between symbolic labels and numeric addresses. */
 public class SymbolTable {
     private HashMap<String, Integer> symbols = new HashMap<String, Integer>();
 
-    // Creates a new empty symbol table.
+    /** Creates a new empty symbol table. */
     public SymbolTable() {
-        // Reminder: SP=0, LCL=1, ARG=2, THIS=3, THAT=4, R0-R15=0-15, SCREEN=16384, KBD=24576
-        // Reminder: User-defined variables (@my_var) start from 16 as they're encountered and count up.
         symbols.put("R0",0);
         symbols.put("R1",1);
         symbols.put("R2",2);
@@ -37,17 +33,17 @@ public class SymbolTable {
         symbols.put("KBD",24576);
     }
 
-    // Adds the pair (symbol,address) to the table.
+    /** Adds the pair (symbol,address) to the table. */
     public void addEntry(String symbol, int address) {
         symbols.put(symbol, address);
     }
 
-    // Does the symbol table contain the given symbol?
+    /** Does the symbol table contain the given symbol? */
     public boolean contains(String symbol) {
         return symbols.containsKey(symbol);
     }
 
-    // Returns the address associated with the symbol.
+    /** Returns the address associated with the symbol. */
     public int getAddress(String symbol) {
         return symbols.get(symbol);
     }

@@ -1,4 +1,5 @@
 package hackcompiler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,11 +49,7 @@ public class Parser {
         input.close(); // close the input stream.
     }
 
-    /**
-     * Read ahead to check if there's more lines.
-     * 
-     * @return true if there is.
-     */
+    /** Return true if there's more lines. */
     public boolean hasMoreLines() {
         return instrIndex < instructions.length;
     }
@@ -68,10 +65,9 @@ public class Parser {
     }
 
     /**
-     * Using the {@link Instruction} enum,
-     * 
-     * @return Returns the type of the current command:
-     *         - A_COMMAND for @Xxx where Xxx is either a symbol or a decimal number
+     * Using the {@link Instruction} enum, returns the type of the current command:
+     * @return 
+     *         * A_COMMAND for {@code @Xxx} where Xxx is either a symbol or a decimal number
      *         - C_COMMAND for dest=comp;jump
      *         - L_COMMAND (actually, pseudo- command) for (Xxx) where Xxx is a symbol.
      */

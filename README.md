@@ -9,6 +9,11 @@ and hopefully with additional personalized syntactical sugar.
 - [ ] If you're motivated, add support for new commands like D=M[139], which decomposes into @139 and D=M.
 
 
+# Generate docs
+```terminal
+javadoc -d doc -sourcepath src -subpackages hackcompiler
+```
+
 ---
 
 # VSCode Getting Started guide

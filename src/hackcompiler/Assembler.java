@@ -1,9 +1,10 @@
 package hackcompiler;
+
 import java.io.*;
 
 /**
- * {@link Assembler}: Assembler will serve as the central class that will call
- * all other methods as needed. It will house the instances of the other classes.
+ * Assembler will serve as the central class that will call all other methods as needed.
+ * It will house the instances of the other classes.
  */
 public class Assembler {
     // Note to my future CS interns: If you care, see the Cornell style guide below.
@@ -11,8 +12,9 @@ public class Assembler {
     // Additionally please use a real(-ish) IDE like VSCode. Do not use the CodeHS.com
     // web editor or any other strange and incomprehensible developer decisions.
 
+    /** Composes helper class methods to translate input. @param args input filepath */
     public static void main(String[] args) {
-        // Create instances of the other helper classes except Parser.
+        // Create instances of the helper classes we're relying on (except Parser)
         Code code = new Code();
         SymbolTable symbolTable = new SymbolTable();
 
@@ -22,12 +24,10 @@ public class Assembler {
             return;
         }
 
-        // Define the filename using the first argument passed from the terminal,
-        // but only keeping everything up to the file extension. We will use this stem
-        // to create an output file.
+        // Define the filename stem by keeping only everything up to the file extension.
         String fileName = args[0].substring(0,args[0].lastIndexOf("."));
 
-        // First pass
+        // First pass / Symbolic pass / Label resolution
         try {
             Parser parser = new Parser(fileName+".asm");
             int line = 0;
@@ -43,7 +43,6 @@ public class Assembler {
                     }
                 } else if (type==Parser.Instruction.A_INSTRUCTION||type==Parser.Instruction.C_INSTRUCTION) {
                     line++; // Compiled lines are only C or A instructions, and do not include Labels.
-                    // If the Parser didnt have the ability to detect invalid instructions, this would not work.
                 }
                 parser.advance();
             }
@@ -51,20 +50,21 @@ public class Assembler {
             System.out.println("Error " + e.getMessage());
         }
         
-        
+        // Second pass
         try {
-            // Create a new Parser object sending in the input filename. This must be
-            // in a try block as there is the potential for a IOException when dealing
-            // with the file system.
+            // Create a new Parser object sending in the input filename. Use a try block
+            // as there is the potential for a IOException when dealing with the file system.
             Parser parser = new Parser(fileName+".asm");
 
             // Create a new file for output.
             PrintStream fileOut = new PrintStream(new File(fileName+".hack"));
 
-            // Iterate over every line in the parser.
+            // The address to assign each encountered variable, starting from 16.
             int newVarAddress = 16;
+            // Iterate over every line in the parser.
             while (parser.hasMoreLines()) {
                 String translation = "";
+                
                 if (parser.instructionType() == Parser.Instruction.A_INSTRUCTION) {
                     // Process an A_Command and write to output file
                     String symbol = parser.symbol();

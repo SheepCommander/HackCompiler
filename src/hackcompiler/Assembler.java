@@ -12,7 +12,10 @@ public class Assembler {
     // Additionally please use a real(-ish) IDE like VSCode. Do not use the CodeHS.com
     // web editor or any other strange and incomprehensible developer decisions.
 
-    /** Composes helper class methods to translate input. @param args input filepath */
+    /**
+     * Composes helper class methods to translate input.
+     * @param args input filepath
+     */
     public static void main(String[] args) {
         // Create instances of the helper classes we're relying on (except Parser)
         Code code = new Code();
@@ -105,7 +108,7 @@ public class Assembler {
 
         // EXTRA: Compare the outputted file to a "filenameCompare.hack" file if one exists.
         try {
-            Compare.compareFile(fileName);
+            new Compare(fileName);
         } catch (IOException e) {} // Ignore errors since we dont care abt this one.
     }
 

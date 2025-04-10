@@ -24,6 +24,7 @@ public class SymbolTable {
         symbols.put("R13",13);
         symbols.put("R14",14);
         symbols.put("R15",15);
+        
         symbols.put("SP",0);
         symbols.put("LCL",1);
         symbols.put("ARG",2);

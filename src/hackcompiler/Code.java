@@ -15,14 +15,15 @@ public class Code {
     private HashMap<String, String> jumpMap = new HashMap<String, String>();
     
     /**
-     * I used this in {@link hackcompiler.Parser#instructionType()}
+     * Used exclusively in {@link hackcompiler.Parser#instructionType()}
      * @return all the valid mnemonics for comp.
      */
     public Set<String> getCompKeys() {
         return compMap.keySet();
     }
+    
     /**
-     * Initialize {@link #Code} and populate the data structures.
+     * Initialize {@link Code} and populate the {@code compMap} etc. data structures.
      */
     public Code() {
         compMap.put("0", "0101010");
@@ -84,7 +85,7 @@ public class Code {
     }
 
     /**
-     * Returns the binary code of the destination
+     * Returns the binary code of the destination,
      * or {@code 000} if there is none (null/empty string passed in)
      */
     public String dest(String inStr) {

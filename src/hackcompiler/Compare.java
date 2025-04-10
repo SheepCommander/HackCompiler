@@ -13,32 +13,32 @@ public class Compare {
     // Using these make all following text in the terminal use that color/background.
     // Using these constants, only one modifier can be applied at once. But, it is possible
     // to multiple. See: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
-    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
-    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
-    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+    private static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    private static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    private static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    private static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    private static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+    private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     // Remember to RESET the color/background after you're done!
-    public static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     /**
-     * Given a fileName, searches for a `fileName`Compare file, and if it exists
+     * Given a {@code fileName}, searches for a {@code fileNameCompare} file, and if it exists
      * prints a comparison table to the console.
      * @param fileName the base stem of the file name/path, without the extension.
      * @throws IOException errors may occur while dealing with file system.
      */
-    public static void compareFile(String fileName) throws IOException {
+    public Compare(String fileName) throws IOException {
         File translatedFile = new File(fileName+".hack");
         File compareFile = new File(fileName+"Compare.hack");
         Scanner translation = new Scanner(translatedFile);

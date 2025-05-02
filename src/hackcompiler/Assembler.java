@@ -58,6 +58,7 @@ public class Assembler {
             // Create a new Parser object sending in the input filename. Use a try block
             // as there is the potential for a IOException when dealing with the file system.
             Parser parser = new Parser(fileName+".asm");
+            parser.setValidCompInstructions(code.getCompKeys());
 
             // Create a new file for output.
             PrintStream fileOut = new PrintStream(new File(fileName+".hack"));

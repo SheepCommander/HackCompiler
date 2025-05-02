@@ -15,7 +15,7 @@ public class Code {
     private HashMap<String, String> jumpMap = new HashMap<String, String>();
     
     /**
-     * Used exclusively in {@link hackcompiler.Parser#instructionType()}
+     * Useful if you need a ist of all the valid nmenonics for C Instructions.
      * @return all the valid mnemonics for comp.
      */
     public Set<String> getCompKeys() {

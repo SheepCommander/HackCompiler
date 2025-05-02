@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * {@link Parser}: The main function of the parser is to break each assembly
@@ -13,6 +14,15 @@ public class Parser {
     private String currentInstruction;
     private String[] instructions;
     private int instrIndex = -1;
+    private Set<String> validCompInstructions;
+    
+    /**
+     * Optional: Allows for accurate discernment between C instructions and invalid instructions.
+     * If not set, every non-L non-A instruction is treated like a C instruction.
+     */
+    public void setValidCompInstructions(Set<String> validCompInstructions) {
+        this.validCompInstructions = validCompInstructions;
+    }
 
     /**
      * This enum will be used to identify the type of the current instruction.
@@ -65,11 +75,13 @@ public class Parser {
     }
 
     /**
-     * Using the {@link Instruction} enum, returns the type of the current command:
+     * Using the {@link Instruction} enum, returns the type of the current command.
+     * Optionally, use {@link #setValidCompInstructions(Set)} to enable Invalid_Command detection.
      * @return 
-     *         * A_COMMAND for {@code @Xxx} where Xxx is either a symbol or a decimal number
-     *         - C_COMMAND for dest=comp;jump
-     *         - L_COMMAND (actually, pseudo- command) for (Xxx) where Xxx is a symbol.
+     *  - A_COMMAND for {@code @Xxx} where Xxx is either a symbol or a decimal number  <br>
+     *  - C_COMMAND for dest=comp;jump  <br>
+     *  - L_COMMAND (actually, pseudo- command) for (Xxx) where Xxx is a symbol.  <br>
+     *  - INVALID_INSTRUCTION can be accurately returned if {@link #setValidCompInstructions(Set)} is set
      */
     public Instruction instructionType() {
         if (currentInstruction.startsWith("@")) {
@@ -79,11 +91,15 @@ public class Parser {
             return Instruction.L_INSTRUCTION;
         }
         
-        Code code = new Code();
-        for (String comp : code.getCompKeys()) {
+        // Parser has not been told the valid comp instructions;
+        if (this.validCompInstructions == null) {
+            return Instruction.C_INSTRUCTION;
+        } // Treat all remaining symbols as C Instructions.
+        
+        // Parser has been told the valid comp instructions;
+        for (String comp : this.validCompInstructions) {
             if (currentInstruction.contains(comp)) return Instruction.C_INSTRUCTION;
         }
-
         return Instruction.INVALID_INSTRUCTION;
     }
 

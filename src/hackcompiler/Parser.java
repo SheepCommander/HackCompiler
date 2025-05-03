@@ -151,7 +151,7 @@ public class Parser {
 	}
 
     /**
-     * ONLY USED FOR THE {@link Compare} CLASS.
+     * ONLY USED FOR DEBUGGING PURPOSES IN {@link Compare} CLASS.
      * @return currentInstruction
      */
     public String getCurrentInstruction() { return currentInstruction; }

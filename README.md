@@ -13,6 +13,7 @@ and hopefully with additional personalized syntactical sugar.
 ```terminal
 javadoc -d doc -sourcepath src -subpackages hackcompiler
 ```
+file:///Users/user0000/Desktop/HackCompiler/doc/hackcompiler/Assembler.html
 
 ---
 

@@ -5,6 +5,11 @@ import java.io.*;
 /**
  * Assembler will serve as the central class that will call all other methods as needed.
  * It will house the instances of the other classes.
+ * 
+ * @see hackcompiler.Code
+ * @see hackcompiler.Compare
+ * @see hackcompiler.Parser
+ * @see hackcompiler.SymbolTable
  */
 public class Assembler {
     // Note to my future CS interns: If you care, see the Cornell style guide below.
